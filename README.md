@@ -42,8 +42,8 @@ sudo apt-get update && sudo apt-get install git
 
 1. If they don't exist already, create `/var/www` (for build files) and `/var/repo` (for source files) and `cd` into `/var/repo`. Create a folder within `/var/repo` for your code to live. Initialize that folder as a bare `git` repository.
 ```
-mkdir {/var/www,/var/repo} && cd /var/www
-mkdir remote && cd remote
+mkdir {/var/www,/var/repo} && cd /var/repo
+mkdir [PROJECT_NAME] && cd [PROJECT_NAME]
 git init --bare
 ```
 
