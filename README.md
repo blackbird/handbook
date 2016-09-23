@@ -42,9 +42,11 @@ sudo apt-get update && sudo apt-get install git
 
 1. If they don't exist already, create `/var/www` (for build files) and `/var/repo` (for source files) and `cd` into `/var/repo`. Create a folder within `/var/repo` for your code to live. Initialize that folder as a bare `git` repository.
 ```
-mkdir {/var/www,/var/repo}
-mkdir {/var/www/[PROJECT_NAME],/var/repo/[PROJECT_NAME].git}
-cd /var/repo/[PROJECT_NAME].git
+mkdir -p {/var/www/example.com,/var/repo/repository.git}
+sudo chmod -R 755 /var/www
+sudo chown -R ubuntu /var/www/example.com
+sudo chown -R ubuntu /var/repo/repository.git
+cd /var/repo/repository.git
 git init --bare
 ```
 
@@ -54,10 +56,10 @@ cd hooks
 cat > post-receive
 ```
 
-1. And configure our shell script (replace `[PROJECT_NAME]` with your repo or site name). You can also add any other shell commands you'd like to run on deploy to this script:
+1. And configure our shell script. You can also add any other shell commands you'd like to run on deploy to this script:
 ```
 #!/bin/sh
-git --work-tree=/var/www/[PROJECT_NAME] --git-dir=/var/repo/[PROJECT_NAME].git checkout -f
+git --work-tree=/var/www/example.com --git-dir=/var/repo/repository.git checkout -f
 ```
 
 1. `ctrl+d` to save, and set up the proper permissions:
@@ -65,11 +67,8 @@ git --work-tree=/var/www/[PROJECT_NAME] --git-dir=/var/repo/[PROJECT_NAME].git c
 chmod +x post-receive
 ```
 
-1. Also, make sure that both directories are owned by the `ubuntu` user:
-```
-sudo chown -R ubuntu /var/www/[PROJECT_NAME]
-sudo chown -R ubuntu /var/repo/[PROJECT_NAME].git
-```
+For tips of configuring nginx with multiple domains/subdomains, this DigitalOcean tutorial is great:
+- https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts
 
 #### Local Machine
 
