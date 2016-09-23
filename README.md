@@ -42,8 +42,9 @@ sudo apt-get update && sudo apt-get install git
 
 1. If they don't exist already, create `/var/www` (for build files) and `/var/repo` (for source files) and `cd` into `/var/repo`. Create a folder within `/var/repo` for your code to live. Initialize that folder as a bare `git` repository.
 ```
-mkdir {/var/www,/var/repo} && cd /var/repo
-mkdir [PROJECT_NAME] && cd [PROJECT_NAME]
+mkdir {/var/www,/var/repo}
+mkdir {/var/www/[PROJECT_NAME],/var/repo/[PROJECT_NAME].git}
+cd /var/repo/[PROJECT_NAME].git
 git init --bare
 ```
 
@@ -62,6 +63,12 @@ git --work-tree=/var/www/[PROJECT_NAME] --git-dir=/var/repo/[PROJECT_NAME].git c
 1. `ctrl+d` to save, and set up the proper permissions:
 ```
 chmod +x post-receive
+```
+
+1. Also, make sure that both directories are owned by the `ubuntu` user:
+```
+sudo chown -R ubuntu /var/www/[PROJECT_NAME]
+sudo chown -R ubuntu /var/repo/[PROJECT_NAME].git
 ```
 
 #### Local Machine
